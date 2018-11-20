@@ -1,0 +1,817 @@
+{
+	"info": {
+		"_postman_id": "4a7c5a0d-0bbb-4104-9651-13d428dafd03",
+		"name": "entry_task_shm",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "请求参数正确，返回结果正常",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "676b6697-4a4b-480e-b7b2-3bb55a433aa4",
+						"exec": [
+							"// var data = JSON.parse(responseBody);",
+							"// tests[\"参数正确，错误码正确\"] = data.error_code === 0;",
+							"// tests[\"参数正确，错误信息正确\"] = data.error_message === \"success\";",
+							"// tests[\"参数正确，返回参考信息正确\"] = data.reference === \"No.1 is shm\";",
+							"",
+							"pm.test(\"参数正确，错误码正确\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.error_code).to.eql(0);",
+							"});",
+							"",
+							"pm.test(\"参数正确，错误信息正确\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.error_message).to.eql(\"success\");",
+							"});",
+							"",
+							"pm.test(\"参数正确，返回参考信息正确\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.reference).to.eql(\"No.1 is shm\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8080/shopee/test?a=1&b=shm",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"shopee",
+						"test"
+					],
+					"query": [
+						{
+							"key": "a",
+							"value": "1"
+						},
+						{
+							"key": "b",
+							"value": "shm"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "a参数为空，返回失败",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "2d7e61d3-ea58-4192-8d3c-66cf5129e862",
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "a8087671-511f-44a7-a62c-44d1f8e0d899",
+						"exec": [
+							"// tests[\"a参数为空，错误码为21\"] = data.error_code === 21;",
+							"// tests[\"a参数为空，错误信息正确\"] = data.error_message === \"empty or wrong params\";",
+							"// // tests[\"a参数为空，返回参考信息为空\"] = data.reference === \" \";",
+							"",
+							"pm.test(\"a参数为空，错误码为21\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.error_code).to.eql(21);",
+							"});",
+							"",
+							"pm.test(\"a参数为空，错误信息正确\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.error_message).to.eql(\"Please ensure that the type of a is int!\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8080/shopee/test?a= &b=shm",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"shopee",
+						"test"
+					],
+					"query": [
+						{
+							"key": "a",
+							"value": " "
+						},
+						{
+							"key": "b",
+							"value": "shm"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "第一个请求参数不为a，返回失败",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "90048586-d177-4052-8020-580d4bb86394",
+						"exec": [
+							"pm.test(\"第一个请求参数不为a，错误码为21\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.error_code).to.eql(21);",
+							"});",
+							"",
+							"pm.test(\"第一个请求参数不为a，错误信息正确\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.error_message).to.eql(\"empty or wrong params\");",
+							"});",
+							"",
+							"pm.test(\"第一个请求参数不为a，返回参考信息为空\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.reference).to.eql(\"Please ensure  params are only the int a and string b\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8080/shopee/test?h=1&b=shm",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"shopee",
+						"test"
+					],
+					"query": [
+						{
+							"key": "h",
+							"value": "1"
+						},
+						{
+							"key": "b",
+							"value": "shm"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "b参数为空，返回失败",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2a490d60-f61e-458d-900f-4d79e0366eb2",
+						"exec": [
+							"pm.test(\"b参数为空，错误码为21\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.error_code).to.eql(21);",
+							"});",
+							"",
+							"pm.test(\"b参数为空，错误信息正确\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.error_message).to.eql(\"empty or wrong params\");",
+							"});",
+							"",
+							"pm.test(\"b参数为空，返回参考信息为空\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.reference).to.eql(\"Please ensure  params are only the int a and string b\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8080/shopee/test?a=1&b=",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"shopee",
+						"test"
+					],
+					"query": [
+						{
+							"key": "a",
+							"value": "1"
+						},
+						{
+							"key": "b",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "第二个请求参数不为b，返回失败",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2c0b832a-5233-4566-823d-bbfbb7b87dff",
+						"exec": [
+							"pm.test(\"第二个请求参数不为b，错误码为21\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.error_code).to.eql(21);",
+							"});",
+							"",
+							"pm.test(\"第二个请求参数不为b，错误信息正确\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.error_message).to.eql(\"empty or wrong params\");",
+							"});",
+							"",
+							"pm.test(\"第二个请求参数不为b，返回参考信息为空\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.reference).to.eql(\"Please ensure  params are only the int a and string b\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8080/shopee/test?a=1&f=shm",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"shopee",
+						"test"
+					],
+					"query": [
+						{
+							"key": "a",
+							"value": "1"
+						},
+						{
+							"key": "f",
+							"value": "shm"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "a参数为string类型，返回失败",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2251e43a-4544-4082-b14b-5f7991033b7c",
+						"exec": [
+							"pm.test(\"a参数为string类型，错误码为21\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.error_code).to.eql(21);",
+							"});",
+							"",
+							"pm.test(\"a参数为string类型，错误信息正确\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.error_message).to.eql(\"Please ensure that the type of a is int!\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8080/shopee/test?a=ss&b=shm",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"shopee",
+						"test"
+					],
+					"query": [
+						{
+							"key": "a",
+							"value": "ss"
+						},
+						{
+							"key": "b",
+							"value": "shm"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "b参数为int类型，返回失败",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bd3dfe7e-9476-4e5d-aa52-d5968b43dd5d",
+						"exec": [
+							"pm.test(\"b参数为int类型，错误码为21\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.error_code).to.eql(21);",
+							"});",
+							"",
+							"pm.test(\"b参数为int类型，错误信息正确\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.error_message).to.eql(\"Please ensure that the type of b is string!\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8080/shopee/test?a=1&b=33",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"shopee",
+						"test"
+					],
+					"query": [
+						{
+							"key": "a",
+							"value": "1"
+						},
+						{
+							"key": "b",
+							"value": "33"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "路径错误，返回失败",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "04277b0d-132a-48b0-8653-0599b37060bf",
+						"exec": [
+							"pm.test(\"其他错误，错误码正确\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.error_code).to.eql(11);",
+							"});",
+							"",
+							"pm.test(\"其他错误，错误信息正确\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.error_message).to.eql(\"system error\");",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8080/shopee/te?a=1&b=shm",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"shopee",
+						"te"
+					],
+					"query": [
+						{
+							"key": "a",
+							"value": "1"
+						},
+						{
+							"key": "b",
+							"value": "shm"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": " a\b参数为特殊符号，返回错误",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "d6cd7d25-ad40-4916-ad89-c14b2ec8fd11",
+						"exec": [
+							"pm.test(\"a参数为特殊符号，错误码为21\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.error_code).to.eql(21);",
+							"});",
+							"",
+							"pm.test(\"a参数为特殊符号，错误信息正确\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.error_message).to.eql(\"Please ensure that the type of a is int!\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8080/shopee/test?a=%$&b=shm",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"shopee",
+						"test"
+					],
+					"query": [
+						{
+							"key": "a",
+							"value": "%$"
+						},
+						{
+							"key": "b",
+							"value": "shm"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "b参数为特殊符号，返回错误",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5a463559-224b-4342-adf3-e4d17c45093c",
+						"exec": [
+							"pm.test(\"b参数为特殊符号，错误码为21\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.error_code).to.eql(21);",
+							"});",
+							"",
+							"pm.test(\"b参数为特殊符号，错误信息正确\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.error_message).to.eql(\"Please ensure that the type of b is string!\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8080/shopee/test?a=3&b=@^_^",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"shopee",
+						"test"
+					],
+					"query": [
+						{
+							"key": "a",
+							"value": "3"
+						},
+						{
+							"key": "b",
+							"value": "@^_^"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "请求参数超过2个，返回失败",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6185e9a3-eb9b-4c34-99d5-864ab21d30b1",
+						"exec": [
+							"pm.test(\"请求参数超过2个，错误码为21\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.error_code).to.eql(21);",
+							"});",
+							"",
+							"pm.test(\"请求参数超过2个，错误信息正确\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.error_message).to.eql(\"empty or wrong params\");",
+							"});",
+							"",
+							"pm.test(\"请求参数超过2个，返回参考信息为空\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.reference).to.eql(\"Please ensure  params are only the int a and string b\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8080/shopee/test?a=1&b=shm&c=ss",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"shopee",
+						"test"
+					],
+					"query": [
+						{
+							"key": "a",
+							"value": "1"
+						},
+						{
+							"key": "b",
+							"value": "shm"
+						},
+						{
+							"key": "c",
+							"value": "ss"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "\ba参数超出int范围，返回失败",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "bf3b0b68-b64d-444a-840b-46e2116572b0",
+						"exec": [
+							"pm.test(\"a参数超出int范围，错误码为21\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.error_code).to.eql(21);",
+							"});",
+							"",
+							"pm.test(\"a参数超出int范围，错误信息正确\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.error_message).to.eql(\"Please ensure that the type of a is int!\");",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8080/shopee/test?a=99.87&b=shm",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"shopee",
+						"test"
+					],
+					"query": [
+						{
+							"key": "a",
+							"value": "99.87"
+						},
+						{
+							"key": "b",
+							"value": "shm"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "b参数是\b有URL特殊意义的符号，返回失败",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b9d03898-1a1b-482a-b3bd-5b18ed447d63",
+						"exec": [
+							"pm.test(\"请求参数超过2个，错误码为21\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.error_code).to.eql(21);",
+							"});",
+							"",
+							"pm.test(\"请求参数超过2个，错误信息正确\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.error_message).to.eql(\"empty or wrong params\");",
+							"});",
+							"// URL中，&为连接符，#代表网页中的一个位置。其右面的字符，就是该位置的标识符",
+							"pm.test(\"请求参数超过2个，返回参考信息为空\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.reference).to.eql(\"Please ensure  params are only the int a and string b\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": ""
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8080/shopee/test?a=1&b=",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"shopee",
+						"test"
+					],
+					"query": [
+						{
+							"key": "a",
+							"value": "1"
+						},
+						{
+							"key": "b",
+							"value": ""
+						},
+						{
+							"key": null,
+							"value": null
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

@@ -1,0 +1,1 @@
+newman run /Users/hongmeisun/Desktop/postman_collection.json --reporters cli,html,json,junit --reporter-json-export jsonOut.json --reporter-junit-export xmlOut.xml --reporter-html-export htmlOut.html
