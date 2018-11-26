@@ -5,6 +5,7 @@
 from http.server import BaseHTTPRequestHandler, HTTPServer
 from urllib import parse
 import json
+# import datetime
 
 
 class ServerHTTP(BaseHTTPRequestHandler):
@@ -23,11 +24,13 @@ class ServerHTTP(BaseHTTPRequestHandler):
 
     # BaseHpptServer没有实现do_GET方法，需要自己重写
     def do_GET(self):
+        # begin = datetime.datetime.now()
+
         # 将url分为6个部分，返回一个包含6个字符串项目的元组：协议、位置、路径、参数、查询、片段
         url_path = parse.urlparse(self.path)
         # print(url_path)
         req_path = url_path.path
-        # 获取参数，返回一个字典
+        # 获取参数，返回一个字典s
         param_dict = parse.parse_qs(url_path.query)
         response = {}
         if req_path == '/shopee/test':
@@ -72,7 +75,9 @@ class ServerHTTP(BaseHTTPRequestHandler):
         else:
             response['error_code'] = 11
             response['error_message'] = 'system error'
-            self.send_res(response, 405)
+            self.send_res(response, 404)
+        # end = datetime.datetime.now()
+        # print("time is :", (end-begin).microseconds)
 
 
 if __name__ == "__main__":
@@ -80,6 +85,4 @@ if __name__ == "__main__":
     # 设置一直监听并接收请求，其中，IP为给localhost设定的访问地址
     http_server.serve_forever()
 
-# 遇到问题？
-#  1、error_message内容为中文时，浏览器显示的是乱码
-# 2、如何判断a是int类型，b是str类型？通过正则表达式？
+

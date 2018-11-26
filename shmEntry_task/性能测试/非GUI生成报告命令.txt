@@ -1,0 +1,3 @@
+cd /Users/hongmeisun/Downloads/apache-jmeter-5-2.0/bin
+
+jmeter -n -t /Users/hongmeisun/Desktop/testjmeter/test.jmx -l report.jtl -e -o /Users/hongmeisun/Desktop/test_report_folder
